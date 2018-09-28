@@ -36,22 +36,19 @@ sub writeTable
     my $matrix = 
       $data->{$tableKey};
 
-    my $calcTableSum = sub { 
+    my $calcTableSum = sub 
+    { 
       my $sumRow ;
       my ($matrix,$args) = @_;
       my $height = scalar @{$matrix} - 1;
       my $breadth = scalar @{$matrix->[0]} -1;
       
       for my $b (0 .. $breadth) {
-        for my $h (0 .. $height) 
-        {
-          $sumRow->[$b] += 
-            $matrix->[$h][$b];
+        for my $h (0 .. $height) {
+          $sumRow->[$b] += $matrix->[$h][$b];
         }
       } 
-      
       return $sumRow;
-
     };
 
     for my $row (@{$data->{$tableKey}}) {

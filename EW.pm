@@ -84,11 +84,15 @@ sub set_format {
 
   for my $i (0 .. $#{$format_conf})
   {
-    my $attribute_name    = $format->{$i};
-    my $attribute_value   = $format_conf->{$i};
+    my $attribute_name   =  $format->{$i};
+    my $attribute_value  =  $format_conf->{$i};
 
+    # setting the numbered attributes
+    # as seen above.
     if ($attribute_value) {
-      $format_object->$attribute_name($attribute_value);
+      $format_object->$attribute_name(
+        $attribute_value
+      );
     }
   }
 
@@ -177,10 +181,4 @@ sub create_final_excel {
     print "TAB ($tab)\n",Dumper $tabData;
   }
 }
-#####################
-__DATA__
-#####################
-
-
-#####################
 1;

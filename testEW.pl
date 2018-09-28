@@ -7,7 +7,6 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-
 my %h = ();
 
 my %conf = ( 
@@ -22,7 +21,9 @@ my %conf = (
                              tableTotal => 0,
                              tableBreadths => [2,3,3],
                              dataOrder => [1,2,3,4,5,6,7,8],
-                             header => [qw(country item code weight color shape price tag)] ,
+                             header => [qw( country item code 
+                                            weight color shape 
+                                            price tag)] ,
                              rows => [],
                         },
                         country_code => 
@@ -37,8 +38,7 @@ my %conf = (
                              dataOrder => [1,3,2,4,5,6,7,8],
                              header => [ qw( country code item 
                                              weight color shape 
-                                             price tag
-                                            )],
+                                             price tag)],
                              rows => [],
                         },
                      },
@@ -50,27 +50,28 @@ while (my $l = <DATA>)
   chomp $l;
   next if $l =~ /^#/;
   next if $l =~ /^(?:\s|\t)+/;
+  ($l =~ s/[\r\f]//g) if $l =~ /[\r\f]/;
+
   push (@data,[split(/\,/,$l)]);
 }
 
 my $data = {
-          'mt' => {
-                    'srcmtkey' => 'src_mt_val|NULL',
-                    'f1key' => 'src_f1val|NULL'
-                  },
-          'diff' => {
-                      'commonkeydiffval' => 'srcval|tgtval'
-                    },
-          'ms' => {
-                    'tgtmskey' => 'NULL|tgt_mt_val',
-                    'f2key' => 'NULL|tgt_f2val'
-                  }
-        };
+  'mt' => { 
+    'srcmtkey' => 'src_mt_val|NULL',
+    'f1key' => 'src_f1val|NULL'
+  },
+  'diff' => {
+    'commonkeydiffval' => 'srcval|tgtval'
+  },
+  'ms' => {
+    'tgtmskey' => 'NULL|tgt_mt_val',
+    'f2key' => 'NULL|tgt_f2val'
+  }};
 
 my $excelFile = EW->new('mybook',\%conf);
-$excelFile->createFinalExcel(\@data);
+$excelFile->create_final_excel(\@data);
 
-
+###################################################
 __DATA__
 #  1       2   3     4      5     6     7    8
 #IN,white-rice,01,1kg,white,long,50.51 USD,none
