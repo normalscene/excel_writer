@@ -1,0 +1,5 @@
+# some data
+IN,white-rice,01,1kg,white,long,50.51 USD,none
+IN,brown-rice,03,1kg,white,long,60.51 USD,none
+CN,yellow-rice,03,1kg,white,long,60.61 USD,none
+KE,white-rice,05,1kg,white,long,40.61 USD,none
