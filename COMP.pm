@@ -14,7 +14,7 @@ sub comp
 
   my $ms    = ($result->{ms} = {});
   my $mt    = ($result->{mt} = {});
-  my $diff  = ($result->{diff} = {});
+  my $df  = ($result->{df} = {});
 
   foreach my $key (keys %{$data->{$src}})
   {
@@ -27,7 +27,7 @@ sub comp
       push (@{$mt->{$key}}, "$src_val|NULL");
     }
     if (exists $data->{$tgt}{$key} && $src_val ne $tgt_val) {
-      push (@{$diff->{$key}}, "$src_val|$tgt_val") 
+      push (@{$df->{$key}}, "$src_val|$tgt_val") 
     }
   }
 

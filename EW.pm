@@ -2,6 +2,7 @@
 
 package EW;
 
+use Econf;
 use strict;
 use warnings;
 use Data::Dumper;
@@ -99,7 +100,6 @@ sub set_format {
   return $self;
 }
 
-
 sub close_excel {
   my $self = shift;
   return $self->{_obj}->close();
@@ -151,6 +151,8 @@ sub create_final_excel {
   my $data = shift;
   return undef if !$data; 
 
+  # fetch configuration to
+  # be used
   my $conf = $self->{conf};
 
   # populate tabwise re-ordered
@@ -166,7 +168,6 @@ sub create_final_excel {
 
     # get the ref to current tab config.
     my $tabConf = $conf->{tabs}{$tab};
-    #print Dumper $tabConf;
 
     # get tab specific configuration.
     my $tabData = $tabConf->{rows} ;
@@ -176,9 +177,11 @@ sub create_final_excel {
     my $rowFreeze = $tabConf->{rowFreeze} || 0; 
     my $colFreeze = $tabConf->{colFreeze} || 0; 
     
-    #> set freeze (vertical and horizontal)
+    # set freeze (vertical and horizontal)
     $worksheet->freeze_panes ($rowFreeze,$colFreeze);
     print "TAB ($tab)\n",Dumper $tabData;
+
+    $wb->add_format($Econf::header_1); 
   }
 }
 1;
