@@ -12,7 +12,25 @@ our $conf =
       row_freeze => 2,
       col_freeze => 2,
       tab_data => undef,
+      tab_data_row_start_num => 2,
       tab_color => 'red',
+      headers => 
+      [
+        {
+          row_number => 1,
+          fields => [qw (country item_no item weight(kg) color shape price status)],
+          header_format => 
+          {
+            align => 'center',
+            valign => 'vcenter',
+            border => 1,
+            color => 'white',
+            bg_color => 'green',
+            font => 'Arial',
+            size => 10,
+          }
+        },
+      ],
       has_merged_headers => 
       [
         { 
@@ -54,7 +72,25 @@ our $conf =
       row_freeze => 2,
       col_freeze => 2,
       tab_data => undef,
+      tab_data_row_start_num => 2,
       tab_color => 'blue',
+      headers => 
+      [
+        {
+          row_number => 1,
+          fields => [qw (country item_no item weight(kg) color shape price status)],
+          header_format => 
+          {
+            align => 'center',
+            valign => 'vcenter',
+            border => 1,
+            color => 'white',
+            bg_color => 'magenta',
+            font => 'Arial',
+            size => 10,
+          },
+        },
+      ],
       has_merged_headers => 
       [
         { 

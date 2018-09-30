@@ -14,16 +14,16 @@ use Data::Dumper;
 my $excel_name = 'test_excel.xlsx';
 my $data= [
             [
-              'IN,1,white-rice,1,white,long,50.51,none'
+              qw(IN 1 white-rice 1 white long 50.51 none)
             ],
             [
-              'IN,3,brown-rice,1,white,long,60.51,none'
+              qw(IN 3 brown-rice 1 white long 60.51 none)
             ],
             [
-              'CN,3,yellow-rice,1,white,long,60.61,none'
+              qw(CN 3 yellow-rice 1 white long 60.61 none)
             ],
             [
-              'KE,4,white-rice,1,white,long,40.61,none'
+              qw(KE 4 white-rice 1 white long 40.61 none)
             ]
           ];
 

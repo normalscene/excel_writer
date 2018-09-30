@@ -32,6 +32,7 @@ sub generate_excel_file {
   # set tabs 
   foreach my $tab_name (keys %{$config->{tabs}})
   {
+
     my $work_tab = $wb->add_worksheet($tab_name);
     my $tab_config  = $self->{conf}{tabs}{$tab_name}; 
 
@@ -40,10 +41,7 @@ sub generate_excel_file {
     {
       my $row_freeze = $tab_config->{row_freeze} || undef;
       my $col_freeze = $tab_config->{col_freeze} || undef;
-      $work_tab->freeze_panes(
-        $row_freeze,
-        $col_freeze 
-      );
+      $work_tab->freeze_panes($row_freeze, $col_freeze);
     }
 
     # associate tab data in config
@@ -72,7 +70,52 @@ sub generate_excel_file {
         my $format = $wb->add_format(%$merge_format);
 
         # write merged header 
-        $work_tab->merge_range($merge_range_size,$merge_text,$format);
+        $work_tab->merge_range(
+          $merge_range_size,
+          $merge_text,
+          $format
+        );
+      }
+
+      # write header
+      if ($tab_config->{headers}) 
+      {
+        my $header_config_list = $tab_config->{headers};
+        for my $header_config (@$header_config_list)
+        {
+          my $tab_header = $header_config->{fields};
+          my $header_row_num = $header_config->{row_number};
+          my $header_format_config = $header_config->{header_format};
+          my $format = $wb->add_format(%$header_format_config);
+
+          for my $header_col_num (0 .. $#{$tab_header})
+          {
+            my $header_field = $tab_header->[$header_col_num];
+            $work_tab->write(
+              $header_row_num,
+              $header_col_num,
+              $header_field,
+              $format
+            );
+          }
+        }
+      }
+      else
+      {
+       die "Need header config or will not proceed!\n";
+      }
+
+      # write data
+      return undef if !$tab_config->{tab_data};
+
+      my $data = $tab_config->{tab_data};
+      my $current_row = $tab_config->{tab_data_row_start_num};
+      my $data_format = $wb->add_format( border => 1 );
+
+      for my $row_array (@$data)
+      {
+        $work_tab->write ($current_row,0,$row_array,$data_format);
+        $current_row++;
       }
     }
   }
