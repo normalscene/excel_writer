@@ -32,7 +32,6 @@ sub generate_excel_file {
   # set tabs 
   foreach my $tab_name (keys %{$config->{tabs}})
   {
-
     my $work_tab = $wb->add_worksheet($tab_name);
     my $tab_config  = $self->{conf}{tabs}{$tab_name}; 
 
@@ -110,18 +109,39 @@ sub generate_excel_file {
 
       my $data = $tab_config->{tab_data};
       my $current_row = $tab_config->{tab_data_row_start_num};
-      my $data_format = $wb->add_format (border => 1);
-      #my $data_format = $wb->add_format(%{$econf::null_format});
+      my $data_format = $wb->add_format(border => 1);
+      my $null_format = $wb->add_format(%{$econf::null_format});
 
       for my $row_array (@$data)
       {
-        $work_tab->write ($current_row,0,$row_array,$data_format);
+        # for conditional formatting
+        my $max_col = scalar @$row_array - 1;
+        $work_tab->conditional_formatting(
+          $current_row,
+          0,
+          $current_row,
+          $max_col,
+          {
+            type => 'text',
+            criteria => 'containing',
+            value => 'NULL',
+            format => $null_format,
+          },
+        );
+        $work_tab->write(
+          $current_row,
+          0,
+          $row_array,
+          $data_format
+        );
         $current_row++;
       }
     }
   }
 
   bless ($self,$class);
+  $self->close_excel();
+
   return $self;
 }
 
@@ -143,7 +163,7 @@ sub get_random_color
 
 sub close_excel {
   my $self = shift;
-  return $self->{_obj}->close();
+  return $self->{workbook}->close();
 }
 
 1;

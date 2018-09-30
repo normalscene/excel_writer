@@ -15,9 +15,9 @@ my $excel_name = 'test_excel.xlsx';
 my $data= 
 [
   [qw (IN 1 white-rice 1 white long 50.51 none)],
-  [qw (IN 3 brown-rice 1 white long 60.51 none)],
+  [qw (IN 3 brown-rice 1 white long 60.51 NULL)],
   [qw (CN 3 yellow-rice 1 white long 60.61 none)],
-  [qw (KE 4 white-rice 1 white long 40.61 none)]
+  [qw (KE 4 white-rice 1 white long 40.61 NULL)]
 ];
 
 my $excel_file = EW2->generate_excel_file (

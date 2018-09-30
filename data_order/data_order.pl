@@ -25,5 +25,5 @@ sub reorder_AoA_data
   return $result;
 }
 
-my $ordered_data = reorder_AoA_data([0,3,2,1],$data);
-print Dumper $ordered_data;
+my $data = reorder_AoA_data([0,3,2,1],$data);
+print Dumper $data;
