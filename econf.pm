@@ -187,11 +187,11 @@ our $green_num_format = {
 our $properties = 
 {
   title => 'Test Excel Workbook',
-  author => 'Gaurav Arya (aryaaur)',
+  author => 'Mr. Author',
   comments => 'Created with Excel::Writer::XLSX with perl 5.28',
   subject => 'Just for testing',
   manager => 'No One',
-  company => 'NWM plc',
+  company =>  undef,
   category => 'General',
   keywords => undef,
   status => 'Valid till 2019',
