@@ -27,14 +27,14 @@ our $conf =
             color => 'white',
             bg_color => 'green',
             font => 'Arial',
-            size => 10,
+            size => 12,
           }
         },
       ],
       has_merged_headers => 
       [
         { 
-          row_size => 40,
+          row_size => undef,
           merge_range_size => 'A1:B1',
           merge_range_text => 'comp keys', 
           merge_format => 
@@ -50,7 +50,7 @@ our $conf =
           },
         },
         {
-          row_size => 40, 
+          row_size => undef, 
           merge_range_size => 'C1:H1',
           merge_range_text => 'Current situation', 
           merge_format => 
@@ -94,7 +94,7 @@ our $conf =
       has_merged_headers => 
       [
         { 
-          row_size => 40, 
+          row_size => undef, 
           merge_range_size => 'A1:B1',
           merge_range_text => 'comp keys', 
           merge_format => 
@@ -110,7 +110,7 @@ our $conf =
           },
         },
         {
-          row_size => 40, 
+          row_size => undef, 
           merge_range_size => 'C1:H1',
           merge_range_text => 'Current situation', 
           merge_format => 
@@ -128,6 +128,43 @@ our $conf =
       ]
     },
   },
+};
+
+our $null_format = {
+  align => 'left',
+  valign => undef, 
+  border => 1,
+  color => '#dddddd',
+  bg_color => '#ff8d00',
+  font => 'Calibri',
+  size => 11,
+};
+our $zero_format = {
+  align => 'left',
+  valign => undef, 
+  border => 1,
+  color => 'white',
+  bg_color => 'navy',
+  font => 'Calibri',
+  size => 11,
+};
+our $red_num_format = {
+  align => 'left',
+  valign => undef, 
+  border => 1,
+  color => 'white',
+  bg_color => 'navy',
+  font => 'Calibri',
+  size => 11,
+};
+our $green_num_format = {
+  align => 'left',
+  valign => undef, 
+  border => 1,
+  color => 'white',
+  bg_color => 'navy',
+  font => 'Calibri',
+  size => 11,
 };
 
 1;

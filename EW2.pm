@@ -1,6 +1,6 @@
 package EW2;
 
-use Econf;
+use econf;
 use strict;
 use warnings;
 use Data::Dumper;
@@ -58,7 +58,7 @@ sub generate_excel_file {
       for my $merge_config (@$merge_config_list)
       {
         # extract config details or set default(s)
-        my $row_size = $merge_config->{row_size} || 40;
+        my $row_size = $merge_config->{row_size} || 30;
         my $merge_format = $merge_config->{merge_format};
         my $merge_text = $merge_config->{merge_range_text};
         my $merge_range_size = $merge_config->{merge_range_size};
@@ -110,7 +110,8 @@ sub generate_excel_file {
 
       my $data = $tab_config->{tab_data};
       my $current_row = $tab_config->{tab_data_row_start_num};
-      my $data_format = $wb->add_format( border => 1 );
+      my $data_format = $wb->add_format (border => 1);
+      #my $data_format = $wb->add_format(%{$econf::null_format});
 
       for my $row_array (@$data)
       {
@@ -124,14 +125,16 @@ sub generate_excel_file {
   return $self;
 }
 
-sub get_random_color {
-  #my $self = shift ;
-  my @colors = (
-    'black', 'blue', 'brown',
-    'cyan', 'gray', 'green',
-    'lime', 'magenta', 'navy',
-    'orange', 'pink', 'purple',
-    'red', 'silver', 'white', 'yellow',
+sub get_random_color 
+{
+  my @colors = qw
+  (
+    black     blue      brown
+    cyan      gray      green
+    lime      magenta   navy
+    orange    pink      purple
+    red       silver    white 
+    yellow
   );
 
   my @shuffled = shuffle(@colors);
