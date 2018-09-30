@@ -17,7 +17,6 @@ sub generate_excel_file {
   # handle extension. null or xls TO xlsx. 
   $excel_name =~ s/^(.+?)xls$/${1}xlsx/g 
     if ($excel_name =~ /^.+?xls$/);
-
   $excel_name = $excel_name.'.xlsx' 
     if ($excel_name !~ /\.xlsx$/);
 
@@ -28,6 +27,13 @@ sub generate_excel_file {
 
   # get current workbook to work upon.
   my $wb = $self->{workbook};
+
+  # set workbook properties
+  # title, comment ..etc.
+  if ($econf::properties)
+  {
+    $wb->set_properties(%{$econf::properties});
+  }
 
   # set tabs 
   foreach my $tab_name (keys %{$config->{tabs}})
@@ -56,8 +62,10 @@ sub generate_excel_file {
       my $merge_config_list = $tab_config->{has_merged_headers}; 
       for my $merge_config (@$merge_config_list)
       {
+        print Dumper $merge_config;
+
         # extract config details or set default(s)
-        my $row_size = $merge_config->{row_size} || 30;
+        my $row_size = $merge_config->{row_size} || 20;
         my $merge_format = $merge_config->{merge_format};
         my $merge_text = $merge_config->{merge_range_text};
         my $merge_range_size = $merge_config->{merge_range_size};
@@ -87,6 +95,18 @@ sub generate_excel_file {
           my $header_format_config = $header_config->{header_format};
           my $format = $wb->add_format(%$header_format_config);
 
+          # if autofilter is ON
+          my $max_header_col = scalar @$tab_header -1 ;
+          if ($header_config->{autofilter})
+          {
+            $work_tab->autofilter(
+              $header_row_num,
+              0,
+              $header_row_num,
+              $max_header_col,
+            );  
+          } 
+
           for my $header_col_num (0 .. $#{$tab_header})
           {
             my $header_field = $tab_header->[$header_col_num];
@@ -109,8 +129,17 @@ sub generate_excel_file {
 
       my $data = $tab_config->{tab_data};
       my $current_row = $tab_config->{tab_data_row_start_num};
-      my $data_format = $wb->add_format(border => 1);
+      my $data_format = $wb->add_format(%{$econf::normal_format});
       my $null_format = $wb->add_format(%{$econf::null_format});
+
+      # override data cell format parameters
+      if ($tab_config->{override}) {
+        if ($tab_config->{override}{data_cell_bg_color}) {
+          $data_format->set_bg_color(
+            $tab_config->{override}{data_cell_bg_color}
+          );
+        }
+      }
 
       for my $row_array (@$data)
       {
@@ -123,7 +152,7 @@ sub generate_excel_file {
           $max_col,
           {
             type => 'text',
-            criteria => 'containing',
+            criteria => 'begins with',
             value => 'NULL',
             format => $null_format,
           },
@@ -140,8 +169,9 @@ sub generate_excel_file {
   }
 
   bless ($self,$class);
-  $self->close_excel();
-
+  if (!$self->close_excel()){
+    print "WARNING: Excel file wasn't properly closed!\n";
+  }
   return $self;
 }
 

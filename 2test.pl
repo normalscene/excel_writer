@@ -21,8 +21,8 @@ my $data=
 ];
 
 my $excel_file = EW2->generate_excel_file (
-    $excel_name,     # excel name
-    $data,           # data to be written
-    $econf::conf     # excel configuration
+  $excel_name,   # excel name
+  $data,         # data to be written
+  $econf::conf   # excel configuration
 ); 
 __END__

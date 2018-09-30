@@ -13,17 +13,18 @@ our $conf =
       col_freeze => 2,
       tab_data => undef,
       tab_data_row_start_num => 2,
-      tab_color => 'red',
+      tab_color => undef, 
       headers => 
       [
         {
+          autofilter => 1,
           row_number => 1,
           fields => [qw (country item_no item weight(kg) color shape price status)],
           header_format => 
           {
             align => 'center',
             valign => 'vcenter',
-            border => 1,
+            #border => undef,
             color => 'white',
             bg_color => 'green',
             font => 'Arial',
@@ -41,7 +42,7 @@ our $conf =
           {
             align => 'left',
             valign => 'vcenter',
-            border => 1,
+            #border => undef,
             color => 'white', 
             bg_color => 'red',
             font => 'Calibri',
@@ -57,7 +58,7 @@ our $conf =
           {
             align => 'left',
             valign => 'vcenter',
-            border => 1,
+            #border => undef,
             color => 'white',
             bg_color => 'navy',
             font => 'Calibri',
@@ -69,25 +70,30 @@ our $conf =
     },
     tab_b => 
     {
+      override => 
+      { 
+        data_cell_bg_color => '#cdfcc1' 
+      },
       row_freeze => 2,
       col_freeze => 2,
       tab_data => undef,
       tab_data_row_start_num => 2,
-      tab_color => 'blue',
+      tab_color => undef,
       headers => 
       [
         {
+          autofilter => 1,
           row_number => 1,
           fields => [qw (country item_no item weight(kg) color shape price status)],
           header_format => 
           {
             align => 'center',
             valign => 'vcenter',
-            border => 1,
+            #border => undef,
             color => 'white',
-            bg_color => 'magenta',
+            bg_color => '#4e376b',
             font => 'Arial',
-            size => 10,
+            size => 12,
           },
         },
       ],
@@ -101,7 +107,7 @@ our $conf =
           {
             align => 'left',
             valign => 'vcenter',
-            border => 1,
+            #border => undef,
             color => 'white',
             bg_color => 'navy',
             font => 'Calibri',
@@ -117,7 +123,7 @@ our $conf =
           {
             align => 'left',
             valign => 'vcenter',
-            border => 1,
+            #border => undef,
             color => 'white',
             bg_color => 'red',
             font => 'Calibri',
@@ -131,18 +137,29 @@ our $conf =
 };
 
 our $null_format = {
-  align => 'left',
+  align => 'right',
   valign => undef, 
-  border => 1,
+  #border => undef,
   color => '#dddddd',
+  #color => 'black',
   bg_color => '#ff8d00',
   font => 'Calibri',
   size => 11,
 };
+our $normal_format = {
+  align => 'right',
+  valign => undef, 
+  #border => undef,
+  color => 'black',
+  bg_color => '#dbeb6a',
+  font => 'Calibri',
+  size => 11,
+};
+
 our $zero_format = {
   align => 'left',
   valign => undef, 
-  border => 1,
+  #border => undef,
   color => 'white',
   bg_color => 'navy',
   font => 'Calibri',
@@ -151,7 +168,7 @@ our $zero_format = {
 our $red_num_format = {
   align => 'left',
   valign => undef, 
-  border => 1,
+  #border => undef,
   color => 'white',
   bg_color => 'navy',
   font => 'Calibri',
@@ -160,11 +177,26 @@ our $red_num_format = {
 our $green_num_format = {
   align => 'left',
   valign => undef, 
-  border => 1,
+  #border => undef,
   color => 'white',
   bg_color => 'navy',
   font => 'Calibri',
   size => 11,
+};
+
+our $properties = 
+{
+  title => 'Test Excel Workbook',
+  author => 'Gaurav Arya (aryaaur)',
+  comments => 'Created with Excel::Writer::XLSX with perl 5.28',
+  subject => 'Just for testing',
+  manager => 'No One',
+  company => 'NWM plc',
+  category => 'General',
+  keywords => undef,
+  status => 'Valid till 2019',
+  hyperlink_base => 'www.google.com',
+  #created - File create date. Such be an aref of gmtime() values.
 };
 
 1;
