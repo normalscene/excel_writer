@@ -55,9 +55,11 @@ sub writeTable
       print "$tableKey".'|'.join('|',@$row)."\n";
     }
 
-    print "tot_${tableKey}|".
-          join('|',@{$calcTableSum->($matrix)}).
-          "\n" if ($args->{tableSum});
+    if ($args->{tableSum})
+    {
+      print "tot_${tableKey}|".join('|',
+        @{$calcTableSum->($matrix)})."\n";
+    }
   }
 }
 

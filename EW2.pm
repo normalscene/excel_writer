@@ -48,6 +48,7 @@ sub generate_excel_file {
     my $work_tab = $wb->add_worksheet($tab_name);
     $self->worktab($work_tab);
 
+    # shorthand for current tab config
     my $tab_config  = $self->{conf}{tabs}{$tab_name}; 
 
     # get the tab theme
@@ -64,36 +65,34 @@ sub generate_excel_file {
     # associate tab data in config
     $tab_config->{tab_data} = $data;
 
-    # set tab color
-    my $tab_color = $tab_config->{tab_color} || get_random_color();
-    $work_tab->set_tab_color($tab_color);
+    # set configured tab color or set default 
+    $work_tab->set_tab_color(
+      $tab_config->{tab_color} || get_random_color()
+    );
 
     # write merged_header if set in conf
     if ($tab_config->{has_merged_headers}) 
     {
       my $merge_config_list = $tab_config->{has_merged_headers}; 
-      #for my $merge_config (@$merge_config_list)
       for my $i (0 .. $#{$merge_config_list})
       {
         my $merge_config = $merge_config_list->[$i];
-        # extract config details 
-        my $row_size = $merge_config->{row_size} || 20;
-        my $merge_text = $merge_config->{merge_range_text};
-        my $merge_range_size = $merge_config->{merge_range_size};
 
-        # set merge_format from theme
-        # and add it to workbook
+        # attach merge_format to workbook 
         my $merge_format = $wb->add_format( 
-          %{$ethemes::themes->{$theme}{merge_format}[$i]} 
+          %{ $ethemes::themes->{$theme}{merge_format}[$i] },
         );
 
         # set merged row height
-        $work_tab->set_row(0,$row_size);
+        $work_tab->set_row(
+          0,
+          $merge_config->{row_size} || 20,
+        );
 
         # write merged header 
         $work_tab->merge_range(
-          $merge_range_size,
-          $merge_text,
+          $merge_config->{merge_range_size},
+          $merge_config->{merge_range_text},
           $merge_format,
         );
       }
@@ -147,7 +146,7 @@ sub generate_excel_file {
       }
 
       # write data
-      return undef if !$tab_config->{tab_data};
+      next if !$tab_config->{tab_data};
 
       my $data = $tab_config->{tab_data};
       my $current_row = $tab_config->{tab_data_row_start_num};
