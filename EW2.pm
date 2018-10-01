@@ -1,13 +1,15 @@
 package EW2;
 
+use econf;
+use ethemes;
+use eformats;
+
 use strict;
 use warnings;
 use Data::Dumper;
 use Excel::Writer::XLSX;
 use List::Util qw(shuffle);
 
-use econf;
-use eformats;
 #####################
 sub generate_excel_file {
   return undef if scalar @_ != 4;
@@ -26,7 +28,7 @@ sub generate_excel_file {
 
   $self->{name} = $excel_name;
   $self->{conf} = $config;
-  $self->{worktab};
+  $self->{worktab} = undef;
   $self->{workbook} = Excel::Writer::XLSX->new($excel_name); 
 
   # get current workbook to work upon.
