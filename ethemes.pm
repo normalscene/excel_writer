@@ -9,7 +9,7 @@ our $themes =
   theme_1 => 
   {
     data_format => $eformats::normal_format,
-    merged_header_format => 
+    merge_format => 
     {
       align => 'left',
       valign => 'vcenter',
@@ -34,7 +34,7 @@ our $themes =
   theme_2 => 
   {
     data_format => $eformats::normal_format,
-    merged_header_format => 
+    merge_format => 
     {
       align => 'left',
       valign => 'vcenter',

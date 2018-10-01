@@ -20,7 +20,10 @@ our $conf =
         {
           autofilter => 1,
           row_number => 1,
-          fields => [qw (country item_no item weight(kg) color shape price status)],
+          fields => 
+          [
+            qw (country item_no item weight(kg) color shape price status)
+          ],
         },
       ],
       has_merged_headers => 
@@ -54,7 +57,10 @@ our $conf =
         {
           autofilter => 1,
           row_number => 1,
-          fields => [qw (country item_no item weight(kg) color shape price status)],
+          fields => 
+          [
+            qw (country item_no item weight(kg) color shape price status)
+          ],
         },
       ],
       has_merged_headers => 

@@ -41,13 +41,17 @@ sub generate_excel_file {
     $wb->set_properties( %{$econf::properties} );
   }
 
-  # set tabs 
+  # Set Tab(s) and configure them as 
+  # per the config. 
   foreach my $tab_name (keys %{$config->{tabs}})
   {
     my $work_tab = $wb->add_worksheet($tab_name);
     $self->worktab($work_tab);
 
     my $tab_config  = $self->{conf}{tabs}{$tab_name}; 
+
+    # get the tab theme
+    my $theme = $tab_config->{theme} || 'theme_1';
 
     # set row and col freeze
     if ($tab_config->{row_freeze} || $tab_config->{col_freeze}) 
@@ -70,27 +74,30 @@ sub generate_excel_file {
       my $merge_config_list = $tab_config->{has_merged_headers}; 
       for my $merge_config (@$merge_config_list)
       {
-        # extract config details or set default(s)
+        # extract config details 
         my $row_size = $merge_config->{row_size} || 20;
-        my $merge_format = $merge_config->{merge_format};
         my $merge_text = $merge_config->{merge_range_text};
         my $merge_range_size = $merge_config->{merge_range_size};
 
-        # set row height
-        $work_tab->set_row(0,$row_size);
+        # set merge_format from theme
+        # and add it to workbook
+        my $merge_format = $wb->add_format( 
+          %{$ethemes::themes->{$theme}{merge_format}} 
+        );
 
-        # add merged header format
-        my $format = $wb->add_format(%$merge_format);
+        # set merged row height
+        $work_tab->set_row(0,$row_size);
 
         # write merged header 
         $work_tab->merge_range(
           $merge_range_size,
           $merge_text,
-          $format
+          $merge_format,
         );
       }
 
-      # write header
+      # Handle Header and related 
+      # configuration.
       if ($tab_config->{headers}) 
       {
         my $header_config_list = $tab_config->{headers};
@@ -98,8 +105,12 @@ sub generate_excel_file {
         {
           my $tab_header = $header_config->{fields};
           my $header_row_num = $header_config->{row_number};
-          my $header_format_config = $header_config->{header_format};
-          my $format = $wb->add_format(%$header_format_config);
+
+          # set header format from theme
+          # and add it to workbook
+          my $header_format = $wb->add_format( 
+            %{$ethemes::themes->{$theme}{header_format}} 
+          );
 
           # if autofilter is ON
           my $max_header_col = scalar @$tab_header -1 ;
@@ -113,6 +124,7 @@ sub generate_excel_file {
             );  
           } 
 
+          # write header
           for my $header_col_num (0 .. $#{$tab_header})
           {
             my $header_field = $tab_header->[$header_col_num];
@@ -120,7 +132,7 @@ sub generate_excel_file {
               $header_row_num,
               $header_col_num,
               $header_field,
-              $format
+              $header_format,
             );
           }
         }
@@ -135,8 +147,13 @@ sub generate_excel_file {
 
       my $data = $tab_config->{tab_data};
       my $current_row = $tab_config->{tab_data_row_start_num};
-      my $data_format = $wb->add_format( %{$eformats::normal_format} );
       my $null_format = $wb->add_format( %{$eformats::null_format} );
+
+      # get the data format from the 
+      # theme and set it.
+      my $data_format = $wb->add_format( 
+        %{$ethemes::themes->{$theme}{data_format}} 
+      );
 
       # override data cell format parameters
       if ($tab_config->{override}) {
