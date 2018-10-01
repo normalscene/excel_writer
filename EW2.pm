@@ -26,6 +26,7 @@ sub generate_excel_file {
 
   $self->{name} = $excel_name;
   $self->{conf} = $config;
+  $self->{worktab};
   $self->{workbook} = Excel::Writer::XLSX->new($excel_name); 
 
   # get current workbook to work upon.
@@ -42,6 +43,8 @@ sub generate_excel_file {
   foreach my $tab_name (keys %{$config->{tabs}})
   {
     my $work_tab = $wb->add_worksheet($tab_name);
+    $self->worktab($work_tab);
+
     my $tab_config  = $self->{conf}{tabs}{$tab_name}; 
 
     # set row and col freeze
@@ -177,8 +180,21 @@ sub generate_excel_file {
 }
 
 sub workbook {
-  my $self = shift; 
+  my $self = shift;
   return $self->{workbook};
+}
+
+sub worktab {
+  my ($self,$worktab) = @_;
+
+  if (scalar @_ == 2)
+  {
+    $self->{worktab} = $worktab;
+  }
+  else
+  {
+    return $self->{worktab};
+  }
 }
 
 sub get_random_color 
