@@ -9,6 +9,7 @@ our $conf =
   {
     tab_a => 
     {
+      theme = 'theme_1',
       row_freeze => 2,
       col_freeze => 2,
       tab_data => undef,
@@ -20,16 +21,6 @@ our $conf =
           autofilter => 1,
           row_number => 1,
           fields => [qw (country item_no item weight(kg) color shape price status)],
-          header_format => 
-          {
-            align => 'center',
-            valign => 'vcenter',
-            #border => undef,
-            color => 'white',
-            bg_color => 'green',
-            font => 'Arial',
-            size => 12,
-          }
         },
       ],
       has_merged_headers => 
@@ -38,33 +29,11 @@ our $conf =
           row_size => undef,
           merge_range_size => 'A1:B1',
           merge_range_text => 'comp keys', 
-          merge_format => 
-          {
-            align => 'left',
-            valign => 'vcenter',
-            #border => undef,
-            color => 'white', 
-            bg_color => 'red',
-            font => 'Calibri',
-            size => 14,
-            bold => 1,
-          },
         },
         {
           row_size => undef, 
           merge_range_size => 'C1:H1',
           merge_range_text => 'Current situation', 
-          merge_format => 
-          {
-            align => 'left',
-            valign => 'vcenter',
-            #border => undef,
-            color => 'white',
-            bg_color => 'navy',
-            font => 'Calibri',
-            size => 14,
-            bold => 1,
-          },
         }
       ]
     },
@@ -85,16 +54,6 @@ our $conf =
           autofilter => 1,
           row_number => 1,
           fields => [qw (country item_no item weight(kg) color shape price status)],
-          header_format => 
-          {
-            align => 'center',
-            valign => 'vcenter',
-            #border => undef,
-            color => 'white',
-            bg_color => '#4e376b',
-            font => 'Arial',
-            size => 12,
-          },
         },
       ],
       has_merged_headers => 
@@ -103,33 +62,11 @@ our $conf =
           row_size => undef, 
           merge_range_size => 'A1:B1',
           merge_range_text => 'comp keys', 
-          merge_format => 
-          {
-            align => 'left',
-            valign => 'vcenter',
-            #border => undef,
-            color => 'white',
-            bg_color => 'navy',
-            font => 'Calibri',
-            size => 14,
-            bold => 1,
-          },
         },
         {
           row_size => undef, 
           merge_range_size => 'C1:H1',
           merge_range_text => 'Current situation', 
-          merge_format => 
-          {
-            align => 'left',
-            valign => 'vcenter',
-            #border => undef,
-            color => 'white',
-            bg_color => 'red',
-            font => 'Calibri',
-            size => 14,
-            bold => 1,
-          },
         }
       ]
     },
