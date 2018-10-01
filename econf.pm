@@ -9,7 +9,7 @@ our $conf =
   {
     tab_a => 
     {
-      theme = 'theme_1',
+      theme => 'theme_1',
       row_freeze => 2,
       col_freeze => 2,
       tab_data => undef,
@@ -39,6 +39,7 @@ our $conf =
     },
     tab_b => 
     {
+      theme => 'theme_2',
       override => 
       { 
         data_cell_bg_color => '#cdfcc1' 
