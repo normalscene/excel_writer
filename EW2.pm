@@ -1,12 +1,13 @@
 package EW2;
 
-use econf;
 use strict;
 use warnings;
 use Data::Dumper;
 use Excel::Writer::XLSX;
 use List::Util qw(shuffle);
 
+use econf;
+use eformats;
 #####################
 sub generate_excel_file {
   return undef if scalar @_ != 4;
@@ -14,25 +15,27 @@ sub generate_excel_file {
   my ($class,$excel_name,
     $data, $config) = @_;
 
+  my $self = {};
+  bless ($self,$class);
+
   # handle extension. null or xls TO xlsx. 
   $excel_name =~ s/^(.+?)xls$/${1}xlsx/g 
     if ($excel_name =~ /^.+?xls$/);
   $excel_name = $excel_name.'.xlsx' 
     if ($excel_name !~ /\.xlsx$/);
 
-  my $self = {};
   $self->{name} = $excel_name;
   $self->{conf} = $config;
   $self->{workbook} = Excel::Writer::XLSX->new($excel_name); 
 
   # get current workbook to work upon.
-  my $wb = $self->{workbook};
+  my $wb = $self->workbook();
 
   # set workbook properties
   # title, comment ..etc.
   if ($econf::properties)
   {
-    $wb->set_properties(%{$econf::properties});
+    $wb->set_properties( %{$econf::properties} );
   }
 
   # set tabs 
@@ -62,8 +65,6 @@ sub generate_excel_file {
       my $merge_config_list = $tab_config->{has_merged_headers}; 
       for my $merge_config (@$merge_config_list)
       {
-        print Dumper $merge_config;
-
         # extract config details or set default(s)
         my $row_size = $merge_config->{row_size} || 20;
         my $merge_format = $merge_config->{merge_format};
@@ -129,8 +130,8 @@ sub generate_excel_file {
 
       my $data = $tab_config->{tab_data};
       my $current_row = $tab_config->{tab_data_row_start_num};
-      my $data_format = $wb->add_format(%{$econf::normal_format});
-      my $null_format = $wb->add_format(%{$econf::null_format});
+      my $data_format = $wb->add_format( %{$eformats::normal_format} );
+      my $null_format = $wb->add_format( %{$eformats::null_format} );
 
       # override data cell format parameters
       if ($tab_config->{override}) {
@@ -168,11 +169,16 @@ sub generate_excel_file {
     }
   }
 
-  bless ($self,$class);
+  #bless ($self,$class);
   if (!$self->close_excel()){
     print "WARNING: Excel file wasn't properly closed!\n";
   }
   return $self;
+}
+
+sub workbook {
+  my $self = shift; 
+  return $self->{workbook};
 }
 
 sub get_random_color 
