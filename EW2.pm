@@ -72,8 +72,10 @@ sub generate_excel_file {
     if ($tab_config->{has_merged_headers}) 
     {
       my $merge_config_list = $tab_config->{has_merged_headers}; 
-      for my $merge_config (@$merge_config_list)
+      #for my $merge_config (@$merge_config_list)
+      for my $i (0 .. $#{$merge_config_list})
       {
+        my $merge_config = $merge_config_list->[$i];
         # extract config details 
         my $row_size = $merge_config->{row_size} || 20;
         my $merge_text = $merge_config->{merge_range_text};
@@ -82,7 +84,7 @@ sub generate_excel_file {
         # set merge_format from theme
         # and add it to workbook
         my $merge_format = $wb->add_format( 
-          %{$ethemes::themes->{$theme}{merge_format}} 
+          %{$ethemes::themes->{$theme}{merge_format}[$i]} 
         );
 
         # set merged row height
@@ -101,15 +103,17 @@ sub generate_excel_file {
       if ($tab_config->{headers}) 
       {
         my $header_config_list = $tab_config->{headers};
-        for my $header_config (@$header_config_list)
+        for my $i (0 .. $#{$header_config_list})
         {
+          my $header_config = $header_config_list->[$i];
+
           my $tab_header = $header_config->{fields};
           my $header_row_num = $header_config->{row_number};
 
           # set header format from theme
           # and add it to workbook
           my $header_format = $wb->add_format( 
-            %{$ethemes::themes->{$theme}{header_format}} 
+            %{$ethemes::themes->{$theme}{header_format}[$i]} 
           );
 
           # if autofilter is ON
