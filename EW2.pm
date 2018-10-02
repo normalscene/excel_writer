@@ -130,11 +130,10 @@ sub generate_excel_file {
           # write header
           for my $header_col_num (0 .. $#{$tab_header})
           {
-            my $header_field = $tab_header->[$header_col_num];
             $work_tab->write(
               $header_row_num,
               $header_col_num,
-              $header_field,
+              $tab_header->[$header_col_num],
               $header_format,
             );
           }
@@ -194,7 +193,6 @@ sub generate_excel_file {
     }
   }
 
-  #bless ($self,$class);
   if (!$self->close_excel()){
     print "WARNING: Excel file wasn't properly closed!\n";
   }
