@@ -3,18 +3,12 @@
 use strict;
 use Data::Dumper;
 
+sub writeTable {};
+
 # to print total of desired columns
 # for a given matrix.
 
-# Chose not to 
-# use AoA.
-my $data = 
-[
-  [qw(type1 1 2 3)],
-  [qw(type1 1 2 3)],
-  [qw(type2 2 1 3)],
-  [qw(type2 2 1 3)],
-];
+
 
 # chose to use
 # HoA, to get
@@ -22,9 +16,22 @@ my $data =
 # worlds.
 my $data2 = 
 {
-  type1 => [[qw(1 2 3)],[qw(1 2 3)]],
-  type2 => [[qw(2 1 3)],[qw(2 1 3)]],
+  type1 => 
+  [
+    [1,2,3],
+    [1,2,3]
+  ],
+  type2 => 
+  [
+    [2,1,3],
+    [2,1,3]
+  ],
 };
+
+# sending matrix
+# and creating 
+# the table.
+writeTable ($data2, {tableSum => 1});
 
 sub writeTable 
 {
@@ -63,9 +70,15 @@ sub writeTable
   }
 }
 
-# sending matrix
-# and creating 
-# the table.
-writeTable ($data2, {tableSum => 1});
+# Chose not to 
+# use AoA.
+my $data = 
+[
+  [qw(type1 1 2 3)],
+  [qw(type1 1 2 3)],
+  [qw(type2 2 1 3)],
+  [qw(type2 2 1 3)],
+];
+
 
 __END__
