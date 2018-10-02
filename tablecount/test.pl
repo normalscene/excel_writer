@@ -3,21 +3,13 @@
 use strict;
 use Data::Dumper;
 
-my $d1 = 
+my $d = 
 [
   [1,2,3],
   [3,2,1],
   [2,3,1],
 ];
-
-my $d2 = 
-[
-  [1,2,3,4,5],
-  [1,'a',3,4,5],
-  [1,2,3,4,5],
-  [1,2,'b',4,5],
-  [1,2,3,4,5],
-];
+print Dumper $d;
 
 sub sum_cols 
 {
@@ -26,7 +18,7 @@ sub sum_cols
 
   for my $row_no (0 .. $#{$data}) {
     for my $col_no (0 .. $#{$data->[$row_no]}) {
-      $sum_cols->[$col_no] += $data->[$row_no][$col_no];
+      $sum_cols->[$col_no] += $data->[$row_no][$col_no] || 0;
     }
   }  
 
@@ -47,6 +39,6 @@ sub sum_rows
   return $sum_rows;
 }
 
-for my $d ($d1,$d2) {
+#for my $d ($d,$d2) {
   print Dumper sum_cols($d),sum_rows($d);
-}
+  #}
