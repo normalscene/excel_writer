@@ -7,6 +7,6 @@ use Data::Dumper;
 use JSON;
 
 my $conf = $econf::conf;
-
 my $json = encode_json $conf;
-print  $json;
+
+print $json;

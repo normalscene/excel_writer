@@ -43,13 +43,13 @@ sub generate_excel_file {
 
   # Set Tab(s) and configure them as 
   # per the config. 
-  foreach my $tab_name (keys %{$config->{tabs}})
+  foreach my $tab_name (keys %{$config})
   {
     my $work_tab = $wb->add_worksheet($tab_name);
     $self->worktab($work_tab);
 
     # shorthand for current tab config
-    my $tab_config  = $self->{conf}{tabs}{$tab_name}; 
+    my $tab_config  = $self->{conf}{$tab_name}; 
 
     # get the tab theme
     my $theme = $tab_config->{theme} || 'theme_1';
