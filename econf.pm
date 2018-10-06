@@ -12,7 +12,7 @@ our $conf =
     col_freeze => 2,
     tab_data => undef,
     tab_data_row_start_num => 2,
-    tab_color => undef, 
+    tab_color => 'red', 
     headers => 
     [
       {
@@ -49,7 +49,7 @@ our $conf =
     col_freeze => 2,
     tab_data => undef,
     tab_data_row_start_num => 2,
-    tab_color => undef,
+    tab_color => 'blue',
     headers => 
     [
       {

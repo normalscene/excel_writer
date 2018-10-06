@@ -84,6 +84,45 @@ our $themes =
       },
     ],
   },
+  theme_3 => 
+  {
+    data_format => $eformats::normal_format,
+    merge_format =>
+    [ 
+      {
+        align => 'left',
+        valign => 'vcenter',
+        border => undef,
+        color => 'white', 
+        bg_color => 'red',
+        font => 'Calibri',
+        size => 14,
+        bold => 1,
+      },
+      {
+        align => 'left',
+        valign => 'vcenter',
+        border => undef,
+        color => 'white',
+        bg_color => 'navy',
+        font => 'Calibri',
+        size => 14,
+        bold => 1,
+      },
+    ],
+    header_format => 
+    [
+      {
+        align => 'center',
+        valign => 'vcenter',
+        border => undef,
+        color => 'white',
+        bg_color => '#01015e',
+        font => 'Arial',
+        size => 12,
+      },
+    ],
+  },
 };
 
 1;

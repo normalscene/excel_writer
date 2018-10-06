@@ -39,6 +39,15 @@ sub sum_rows
   return $sum_rows;
 }
 
+sub print_table {
+  my $table = shift;
+  foreach my $row (@$table){
+    print join(',',@$row),"\n";
+  }
+  print join(',',@{sum_cols($table)}),"\n";
+  return;
+}
 #for my $d ($d,$d2) {
-  print Dumper sum_cols($d),sum_rows($d);
+#print Dumper sum_cols($d),sum_rows($d);
+print_table($d);
   #}
